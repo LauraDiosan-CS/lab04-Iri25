@@ -5,6 +5,7 @@
 #include <ostream>
 #include <iostream>
 
+
 using namespace std;
 
 Movie::Movie()
@@ -13,10 +14,10 @@ Movie::Movie()
 
 	this->title = NULL;
 	this->date = NULL;
-	this->gender = NULL;
+	this->genre = NULL;
 }
 
-Movie::Movie(char* title, char* date, char* gender)
+Movie::Movie(char* title, char* date, char* genre)
 {
 	//cout << "General constructor!" << endl;
 
@@ -26,8 +27,8 @@ Movie::Movie(char* title, char* date, char* gender)
 	this->date = new char[strlen(date) + 1];
 	strcpy_s(this->date, 1 + strlen(date), date);
 
-	this->gender = new char[strlen(gender) + 1];
-	strcpy_s(this->gender, 1 + strlen(gender), gender);
+	this->genre = new char[strlen(genre) + 1];
+	strcpy_s(this->genre, 1 + strlen(genre), genre);
 }
 
 Movie::Movie(const Movie& movie)
@@ -36,7 +37,7 @@ Movie::Movie(const Movie& movie)
 
 	setTitle(movie.title);
 	setDate(movie.date);
-	setGender(movie.gender);
+	setGenre(movie.genre);
 }
 
 Movie::~Movie()
@@ -51,9 +52,9 @@ Movie::~Movie()
 		delete[] this->date;
 	this->date = NULL;
 
-	if (this->gender)
-		delete[] this->gender;
-	this->gender = NULL;
+	if (this->genre)
+		delete[] this->genre;
+	this->genre = NULL;
 
 }
 
@@ -67,9 +68,9 @@ char* Movie::getDate()
 	return this->date;
 }
 
-char* Movie::getGender()
+char* Movie::getGenre()
 {
-	return this->gender;
+	return this->genre;
 }
 
 
@@ -95,29 +96,48 @@ void Movie::setDate(char* date)
 }
 
 
-void Movie::setGender(char* gender)
+void Movie::setGenre(char* genre)
 {
-	if (this->gender) 
+	if (this->genre)
 	{
-		delete[] this->gender;
+		delete[] this->genre;
 	}
-	this->gender = new char[strlen(gender) + 1];
-	strcpy_s(this->gender, strlen(gender) + 1, gender);
+	this->genre = new char[strlen(genre) + 1];
+	strcpy_s(this->genre, strlen(genre) + 1, genre);
 }
 
 
 Movie& Movie::operator=(const Movie& movie)
 {
+	if (this == &movie)
+		return *this;
+
+	if (title)
+		delete[] title;
+	title = new char[strlen(movie.title) + 1];
+	strcpy_s(title, strlen(movie.title) + 1, movie.title);
+
+	if (date)
+		delete[] date;
+	date = new char[strlen(movie.date) + 1];
+	strcpy_s(date, strlen(movie.date) + 1, movie.date);
+
+	if (genre)
+		delete[] genre;
+	genre = new char[strlen(movie.genre) + 1];
+	strcpy_s(genre, strlen(movie.genre) + 1, movie.genre);
+
+	/*
 	this->setTitle(movie.title);
 	this->setDate(movie.date);
-	this->setGender(movie.gender);
-
+	this->setGender(movie.genre);
+	*/
 	return *this;
 }
 
 bool Movie:: operator==(const Movie& movie)
 {
-	return (strcmp(this->title, movie.title) == 0) && (strcmp(this->date, movie.date) == 0) && (strcmp(this->gender, movie.gender) == 0);
+	return (strcmp(this->title, movie.title) == 0) && (strcmp(this->date, movie.date) == 0) && (strcmp(this->genre, movie.genre) == 0);
 }
 
 istream& operator>>(istream& is, const Movie& movie)
@@ -127,11 +147,11 @@ istream& operator>>(istream& is, const Movie& movie)
 	cout << "Dati data lansarii: ";
 	is >> movie.date;
 	cout << "Dati genul: ";
-	is >> movie.gender;
+	is >> movie.genre;
 	return is;
 }
 ostream& operator<<(ostream& os, const Movie& movie)
 {
-	os <<"Film: "<< movie.title << ", "<< movie.date << ", " << movie.gender << endl;
+	os << "Film: "<< movie.title << ", " << movie.date << ", " << movie.genre << endl;
 	return os;
 }

@@ -1,57 +1,79 @@
-#include <iostream>
-#include "domain.h"
-#include "service.h"
-#include "repository.h"
+# include "service.h"
+# include "repository.h"
+# include <iostream>
 
- using namespace std;
+using namespace std;
 
-void reading(Repository& repository)
+Service::Service()
 {
-    char title[20];
-    char date[12];
-    char gender[20];
-
-    cout << "Dati titlul: ";
-    cin >> title;
-
-    cout << "Dati data lansarii: ";
-    cin >> date;
-
-    cout << "Dati genul: ";
-    cin >> gender;
-    
-    Movie movie(title, date, gender);
-    repository.addMovie(movie);
-    cout << endl << "Filmul a fost adaugat!" << endl;
 
 }
 
-void display(Repository& repository)
+Service::Service(const Repository& repository)
 {
-    int i;
-    for (i = 0; i < repository.getSize(); i++)
-    {
-        cout << repository.getAll()[i];
-    }
+    this->repository = repository;
 }
 
-void filter_movies_by_gender(Repository& repository, char* gender, Movie filter_movies[100], int& m)
+Service::~Service()
+{
+
+}
+
+void Service::setRepository(const Repository& repository)
+{
+    this->repository = repository;
+}
+
+void Service::addMovieService(Movie& movie)
+{
+    return repository.addMovie(movie);  
+}
+
+bool Service::findMovieService(Movie& movie)
+{
+    return repository.findMovie(movie);
+}
+
+void Service::deleteMovieService(Repository& repository, int& i)
+{
+    Movie crt_Movie = repository.getItemFromPosition(i);
+    repository.deleteMovie(crt_Movie);
+}
+
+void Service::updateMovieService(Repository& repository, int& i, char* title, char* date, char* genre)
+{
+    Movie crt_Movie = repository.getItemFromPosition(i);
+    repository.updateMovie(crt_Movie, title, date, genre);
+}
+
+int Service::getSize()
+{
+    return repository.getSize();
+}
+
+Movie* Service::getAll()
+{
+    return repository.getAll();
+}
+
+
+void Service::filter_movies_by_genre(Repository& repository, char* genre, Movie filter_movies[100], int& m)
 {
     int i;
     for (i = 0; i < repository.getSize(); i++)
     {
         Movie crt_Movie = repository.getItemFromPosition(i);
-        if (strcmp(crt_Movie.getGender(), gender) == 0)
+        if (strcmp(crt_Movie.getGenre(), genre) == 0)
         {
             filter_movies[m++] = crt_Movie;
         }
     }
     if (m == 0)
         cout << "Nu exista!" << endl;
-    
+
 }
 
-void delete_movies_by_date(Repository& repository, char* date)
+void Service::delete_movies_by_date(Repository& repository, char* date)
 {
     int i = 0;
     while (i < repository.getSize())
@@ -64,14 +86,3 @@ void delete_movies_by_date(Repository& repository, char* date)
         i++;
     }
 }
-/*void deleteMovieService(Repository& repository, int& i)
-{
-    Movie crt_Movie = repository.getItemFromPosition(i);
-    repository.deleteMovie(crt_Movie);
-}
-
-void updateMovieService(Repository& repository, int& i, char* title, char* date, char* gender)
-{
-    Movie crt_Movie = repository.getItemFromPosition(i);
-    repository.updateMovie(crt_Movie, title, date, gender);
-}*/

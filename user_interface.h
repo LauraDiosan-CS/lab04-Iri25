@@ -4,7 +4,12 @@
 
 void show_menu();
 
+void reading(Service& service);
+
+void display(Service& service);
+
+
 int run();
 
-#endif // USER_INTERFACE_H
+#endif //USER_INTERFACE_H
 

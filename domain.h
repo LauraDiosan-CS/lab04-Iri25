@@ -10,19 +10,19 @@ class Movie
 private:
     char* title;
     char* date;
-    char* gender;
+    char* genre;
 public:
     Movie();
-    Movie(char* title, char* date, char* gender);
+    Movie(char* title, char* date, char* genre);
     Movie(const Movie& movie);
     ~Movie();
 
     char* getTitle();
     char* getDate();
-    char* getGender();
+    char* getGenre();
     void setTitle(char* title);
     void setDate(char* date);
-    void setGender(char* gender);
+    void setGenre(char* genre);
 
     Movie& operator = (const Movie& movie);
     bool operator == (const Movie& movie);
@@ -31,6 +31,6 @@ public:
 
 };
 
-#endif // DOMAIN_H = MOVIE_H
+#endif //DOMAIN_H = MOVIE_H
 
 

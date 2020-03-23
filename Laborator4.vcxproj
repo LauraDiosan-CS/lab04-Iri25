@@ -138,17 +138,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="tests_repository.h" />
+    <ClInclude Include="tests_service.h" />
     <ClInclude Include="user_interface.h" />
     <ClInclude Include="repository.h" />
-    <ClInclude Include="tests.h" />
+    <ClInclude Include="tests_domain.h" />
     <ClInclude Include="domain.h" />
     <ClInclude Include="service.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="service.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tests_service.cpp" />
+    <ClCompile Include="tests_repository.cpp" />
     <ClCompile Include="user_interface.cpp" />
-    <ClCompile Include="tests.cpp" />
+    <ClCompile Include="tests_domain.cpp" />
     <ClCompile Include="domain.cpp" />
     <ClCompile Include="repository.cpp" />
   </ItemGroup>

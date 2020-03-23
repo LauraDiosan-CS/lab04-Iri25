@@ -1,22 +1,18 @@
 #include <iostream>
+#include "domain.h"
+#include "repository.h"
+#include "service.h"
+#include "user_interface.h"
 #include "tests.h"
-#include "entity.h"
+
 
 using namespace std;
 
 int main()
 {
-    char name[100];
-    cout << "Dati numele: ";
-    cin >> name;
-    
-    tests();
-    Entity s1(name);
-    cout << s1;
-
-    Entity s2(s1);
-    Entity s3 = s1;
-    Entity s4;
-    s4 = s2;
+	run();
+	tests();
+	tests_with_repository();
+	tests_with_service();
+	return 0;
 }
-

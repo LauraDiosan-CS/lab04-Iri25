@@ -1,90 +1,253 @@
 #include <cassert>
 #include <string.h>
+#include "domain.h"
+#include "repository.h"
+#include "service.h"
 #include "tests.h"
-#include "entity.h"
 
-void tests() 
+void tests()
 {
+	Movie movies[5];
 
+	char* title1 = new char[20];
+	char* title2 = new char[20];
+	char* title3 = new char[20];
+	char* title4 = new char[20];
+	char* title5 = new char[20];
 
-	Entity entity[5];
-	char* name1 = new char[10];
-	char* name2 = new char[10];
-	char* name3 = new char[10];
-	char* name4 = new char[10];
-	char* name5 = new char[10];
+	char* date1 = new char[20];
+	char* date2 = new char[20];
+	char* date3 = new char[20];
+	char* date4 = new char[20];
+	char* date5 = new char[20];
 
-	strcpy_s(name1, sizeof "Ion", "Ion");
-	Entity s1(name1);
+	char* gender1 = new char[20];
+	char* gender2 = new char[20];
+	char* gender3 = new char[20];
+	char* gender4 = new char[20];
+	char* gender5 = new char[20];
 
-	strcpy_s(name2, sizeof "Maria", "Maria");
-	Entity s2(name2);
+	//implicit constructor
+	strcpy_s(title1, sizeof "Bright", "Bright");
+	strcpy_s(date1, sizeof "11.11.2019", "11.11.2019");
+	strcpy_s(gender1, sizeof "thriller", "thriller");
+	Movie movie1; 
+	
+	//general constructor
+	strcpy_s(title2, sizeof "Mute", "Mute");
+	strcpy_s(date2, sizeof "11.11.2011", "11.11.2011");
+	strcpy_s(gender1, sizeof "drame", "drame");
+	Movie movie2(title2, date2, gender2);
 
-	strcpy_s(name3, sizeof "Carmen", "Carmen");
-	Entity s3(name3);
+	strcpy_s(title3, sizeof "Mank", "Mank");
+	strcpy_s(date3, sizeof "09.11.2016", "09.11.2016");
+	strcpy_s(gender3, sizeof "biographical", "biographical");
+	Movie movie3(title3, date3, gender3);
 
-	strcpy_s(name4, sizeof "Radu", "Radu");
-	Entity s4(name4);
+	strcpy_s(title4, sizeof "Tig", "Tig");
+	strcpy_s(date4, sizeof "02.03.2020", "02.03.2020");
+	strcpy_s(gender4, sizeof "documentary", "documentary");
+	Movie movie4(title4, date4, gender4);
 
-	strcpy_s(name5, sizeof "John", "John");
-	Entity s5(name5);
+	strcpy_s(title5, sizeof "Rebecca", "Rebecca");
+	strcpy_s(date5, sizeof "01.02.2020", "01.02.2020");
+	strcpy_s(gender5, sizeof "thriller", "thriller");
+	Movie movie5(title5, date5, gender5);
 
-	entity[0] = s1;
-	entity[1] = s2;
-	entity[2] = s3;
-	entity[3] = s4;
-	entity[4] = s5;
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
 
-	Entity s1;
-	Entity s2('Ana');
-	Entity s3 != s4;
-	assert(s5.getName() == "John");
-	s3.setName("Adrian");
-	s4 = s1;
-	assert(s4 == s1);
-	//Student result[5];
-	//int resultLen;
+	//getTitle
+	assert(movie1.getTitle() == "Bright");
+	assert(movie2.getTitle() == "Mute");
+	assert(movie3.getTitle() == "Mank");
+	assert(movie4.getTitle() == "Tig");
+	assert(movie5.getTitle() == "Rebecca");
 
-	//char* searchedName = new char[10];
-	//strcpy_s(searchedName, sizeof "ar", "ar");
+	//getDate
+	assert(movie1.getDate() == "11.11.2019");
+	assert(movie2.getDate() == "11.11.2011");
+	assert(movie3.getDate() == "09.11.2016");
+	assert(movie4.getDate() == "02.03.2020");
+	assert(movie5.getDate() == "01.02.2020");
 
-	/*filterStudents(students, 5, searchedName, 10, result, resultLen);
+	//getGender
+	assert(movie1.getGender() == "thriller");
+	assert(movie2.getGender() == "drame");
+	assert(movie3.getGender() == "biographical");
+	assert(movie4.getGender() == "documentary");
+	assert(movie5.getGender() == "thriller");
 
-	assert(resultLen == 2);
-	assert(students[1] == result[0]);
-	assert(students[2] == result[1]);*/
+	//setTitle
+	movie2.setTitle(movie3.getTitle()); 
+	assert(movie2.getTitle() == movie3.getTitle());
+
+	//setDate
+	movie2.setDate(movie3.getDate());
+	assert(movie2.getDate() == movie3.getDate());
+
+	//setGender
+	movie2.setGender(movie3.getGender()); 
+	assert(movie2.getGender() == movie3.getGender());
+
+	//operator
+	movie4 = movie1;
+	assert(movie4 == movie1);
 }
+ 
 
 void tests_with_repository()
 {
-	Entity entity[5];
-	char* name1 = new char[10];
-	char* name2 = new char[10];
-	char* name3 = new char[10];
-	char* name4 = new char[10];
-	char* name5 = new char[10];
+	Movie movies[5];
+	Repository repository;
 
-	strcpy_s(name1, sizeof "Ion", "Ion");
-	Entity s1(name1);
+	char* title1 = new char[20];
+	char* title2 = new char[20];
+	char* title3 = new char[20];
+	char* title4 = new char[20];
+	char* title5 = new char[20];
 
-	strcpy_s(name2, sizeof "Maria", "Maria");
-	Entity s2(name2);
+	char* date1 = new char[20];
+	char* date2 = new char[20];
+	char* date3 = new char[20];
+	char* date4 = new char[20];
+	char* date5 = new char[20];
 
-	strcpy_s(name3, sizeof "Carmen", "Carmen");
-	Entity s3(name3);
+	char* gender1 = new char[20];
+	char* gender2 = new char[20];
+	char* gender3 = new char[20];
+	char* gender4 = new char[20];
+	char* gender5 = new char[20];
 
-	strcpy_s(name4, sizeof "Radu", "Radu");
-	Entity s4(name4);
+	//implicit constructor
+	strcpy_s(title1, sizeof "Bright", "Bright");
+	strcpy_s(date1, sizeof "11.11.2019", "11.11.2019");
+	strcpy_s(gender1, sizeof "thriller", "thriller");
+	Movie movie1;
 
-	strcpy_s(name5, sizeof "John", "John");
-	Entity s5(name5);
+	//general constructor
+	strcpy_s(title2, sizeof "Mute", "Mute");
+	strcpy_s(date2, sizeof "11.11.2011", "11.11.2011");
+	strcpy_s(gender1, sizeof "drame", "drame");
+	Movie movie2(title2, date2, gender2);
 
-	entity[0] = s1;
-	entity[1] = s2;
-	entity[2] = s3;
-	entity[3] = s4;
-	entity[4] = s5;
+	strcpy_s(title3, sizeof "Mank", "Mank");
+	strcpy_s(date3, sizeof "09.11.2016", "09.11.2016");
+	strcpy_s(gender3, sizeof "biographical", "biographical");
+	Movie movie3(title3, date3, gender3);
 
-	Entity s1("Ion);
-	Repository 
+	strcpy_s(title4, sizeof "Tig", "Tig");
+	strcpy_s(date4, sizeof "02.03.2020", "02.03.2020");
+	strcpy_s(gender4, sizeof "documentary", "documentary");
+	Movie movie4(title4, date4, gender4);
+
+	strcpy_s(title5, sizeof "Rebecca", "Rebecca");
+	strcpy_s(date5, sizeof "01.02.2020", "01.02.2020");
+	strcpy_s(gender5, sizeof "thriller", "thriller");
+	Movie movie5(title5, date5, gender5);
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
+	//addMovie
+	repository.addMovie(movie1);
+	repository.addMovie(movie2);
+	repository.addMovie(movie3);
+	repository.addMovie(movie4);
+	repository.addMovie(movie5);
+
+	assert(movies[0] == movie1);
+	assert(movies[1] == movie2);
+	assert(movies[2] == movie3);
+	assert(movies[3] == movie4);
+	assert(movies[4] == movie5);
+
+	//deleteMovie
+	repository.deleteMovie(movie4);
+
+	//updateMovie
+	repository.updateMovie(movie2, movie3.getTitle(), movie1.getDate(), movie5.getGender());
+	assert(movie2.getTitle() == "Mank");
+	assert(movie2.getDate() == "11.11.2019");
+	assert(movie2.getGender() == "thriller");
+
+
+	//getAll
+	assert(repository.getAll()[0] == movie1);
+	assert(repository.getAll()[1] == movie2);
+	assert(repository.getAll()[2] == movie3);
+	assert(repository.getAll()[3] == movie5);
 }
+
+void tests_with_service()
+{
+	int m;
+	Movie filter_movies[100];
+	Movie movies[5];
+	Repository repository;
+
+	char* title1 = new char[20];
+	char* title2 = new char[20];
+	char* title3 = new char[20];
+	char* title4 = new char[20];
+	char* title5 = new char[20];
+
+	char* date1 = new char[20];
+	char* date2 = new char[20];
+	char* date3 = new char[20];
+	char* date4 = new char[20];
+	char* date5 = new char[20];
+
+	char* gender1 = new char[20];
+	char* gender2 = new char[20];
+	char* gender3 = new char[20];
+	char* gender4 = new char[20];
+	char* gender5 = new char[20];
+
+	//implicit constructor
+	strcpy_s(title1, sizeof "Bright", "Bright");
+	strcpy_s(date1, sizeof "11.11.2019", "11.11.2019");
+	strcpy_s(gender1, sizeof "thriller", "thriller");
+	Movie movie1;
+
+	//general constructor
+	strcpy_s(title2, sizeof "Mute", "Mute");
+	strcpy_s(date2, sizeof "11.11.2011", "11.11.2011");
+	strcpy_s(gender1, sizeof "drame", "drame");
+	Movie movie2(title2, date2, gender2);
+
+	strcpy_s(title3, sizeof "Mank", "Mank");
+	strcpy_s(date3, sizeof "09.11.2016", "09.11.2016");
+	strcpy_s(gender3, sizeof "biographical", "biographical");
+	Movie movie3(title3, date3, gender3);
+
+	strcpy_s(title4, sizeof "Tig", "Tig");
+	strcpy_s(date4, sizeof "02.03.2020", "02.03.2020");
+	strcpy_s(gender4, sizeof "documentary", "documentary");
+	Movie movie4(title4, date4, gender4);
+
+	strcpy_s(title5, sizeof "Rebecca", "Rebecca");
+	strcpy_s(date5, sizeof "01.02.2020", "01.02.2020");
+	strcpy_s(gender5, sizeof "thriller", "thriller");
+	Movie movie5(title5, date5, gender5);
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
+
+	//filter_movies_by_gender
+	filter_movies_by_gender(repository, movie5.getGender(), filter_movies, m);
+	
+	//delete_movies_by_date
+	delete_movies_by_date(repository, movie5.getDate());
+}
+

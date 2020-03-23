@@ -1,17 +1,22 @@
 #pragma once
-#include "entity.h"
+#include "domain.h"
 
 class Repository
 {
-    private:
-        Entity e[20];
-        int n;
-    public:
-        Repository();
-        ~Repository();
+private:
+    Movie movies[100]; 
+    int n;
+public:
+    Repository();
+    ~Repository();
 
-        void addElem(Entity s);
-        Entity* getAll();
-        int getSize();
+    void addMovie(Movie& movie); 
+    int findMovie(Movie& movie);
+    Movie getItemFromPosition(int i);
+    void deleteMovie(Movie& movie);
+    void updateMovie(Movie movie, char*, char*, char*);
+    Movie* getAll();
+    int getSize();
 
 };
+

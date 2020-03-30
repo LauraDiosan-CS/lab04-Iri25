@@ -1,19 +1,21 @@
-#include <cassert>
-#include <string.h>
-#include "domain.h"
-#include "repository.h"
-#include "service.h"
 #include "tests_service.h"
+#include "service.h"
+#include <assert.h>
 
-
-
-void tests_with_service()
+TestService::TestService()
 {
-	int m, i;
-	Movie filter_movies[100];
-	Movie movies[5];
-	Repository repository;
+
+}
+
+TestService::~TestService()
+{
+
+}
+
+void TestService::tests_constructors()
+{
 	Service service;
+	Movie movies[5];
 
 	char* title1 = new char[20];
 	char* title2 = new char[20];
@@ -65,42 +67,116 @@ void tests_with_service()
 	movies[2] = movie3;
 	movies[3] = movie4;
 	movies[4] = movie5;
+}
 
+void TestService::test_addMovie()
+{
+	Service service;
+	Movie movies[5], movie1, movie2, movie3, movie4, movie5;
 
-	//addMovie
-	service.addMovieService(movie1);
-	service.addMovieService(movie2);
-	service.addMovieService(movie3);
-	service.addMovieService(movie4);
-	service.addMovieService(movie5);
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
+	service.addMovie(movie1);
+	service.addMovie(movie2);
+	service.addMovie(movie3);
+	service.addMovie(movie4);
+	service.addMovie(movie5);
 
 	assert(movies[0] == movie1);
 	assert(movies[1] == movie2);
 	assert(movies[2] == movie3);
 	assert(movies[3] == movie4);
 	assert(movies[4] == movie5);
+}
 
-	//deleteMovie
-	i = 4;
-	service.deleteMovieService(repository, i);
+void TestService::test_updateMovie()
+{
+	Service service;
+	Movie movies[5], movie1, movie2, movie3, movie5;
 
-	//updateMovie
-	i = 3;
-	service.updateMovieService(repository, i, movie3.getTitle(), movie1.getDate(), movie5.getGenre());
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[4] = movie5;
+
+	service.updateMovie(movie2, movie3.getTitle(), movie1.getDate(), movie5.getGenre());
+	
 	assert(movie2.getTitle() == "Mank");
 	assert(movie2.getDate() == "11.11.2019");
 	assert(movie2.getGenre() == "thriller");
+}
 
+void TestService::test_deleteMovie()
+{
+	Service service;
+	Movie movies[5], movie4;
+	movies[3] = movie4;
 
-	//getAll
+	service.deleteMovie(movie4);
+}
+
+void TestService::test_getAll()
+{
+	Service service;
+	Movie movies[5], movie1, movie2, movie3, movie5;
+	
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[4] = movie5;
+
 	assert(service.getAll()[0] == movie1);
 	assert(service.getAll()[1] == movie2);
 	assert(service.getAll()[2] == movie3);
 	assert(service.getAll()[3] == movie5);
+}
+void TestService::test_filter_movies_by_genre()
+{
+	Service service;
+	int m;
+	Movie filter_movies[100], movies[5], movie5;
 
-	//filter_movies_by_gender
-	service.filter_movies_by_genre(repository, movie5.getGenre(), filter_movies, m);
+	movies[4] = movie5;
 
-	//delete_movies_by_date
-	service.delete_movies_by_date(repository, movie5.getDate());
+	service.filter_movies_by_genre(movie5.getGenre(), filter_movies, m);
+}
+void TestService::test_delete_movies_by_date()
+{
+	Service service;
+	Movie movies[5], movie5;
+
+	movies[4] = movie5;
+
+	service.delete_movies_by_date(movie5.getDate());
+}
+void TestService::test_undo()
+{
+	Service service;
+	Movie movies[5], movie1;
+
+	movies[0] = movie1;
+	
+	service.addMovie(movie1);
+	assert(service.getSize() == 1);
+
+	service.undo();
+	assert(service.getSize()==0);
+	
+}
+
+void TestService::run_TestService()
+{
+	void tests_constructor();
+	void test_addMovie();
+	void test_updateMovie();
+	void test_deleteMovie();
+	void test_getAll();
+	void test_filter_movies_by_genre();
+	void test_delete_movies_by_date();
+	void test_undo();
+	
 }

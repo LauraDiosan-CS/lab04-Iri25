@@ -1,54 +1,68 @@
-# include "service.h"
-# include "repository.h"
-# include <iostream>
-
+#include "service.h"
+#include<iostream>
 using namespace std;
 
 Service::Service()
 {
-
+    number_options = 0;
+    options = new Repository[10];
+    options[number_options++] = repository;
 }
 
-Service::Service(const Repository& repository)
+Service::Service(const Service& service)
 {
-    this->repository = repository;
+    this->repository = service.repository;
+    this->options = service.options;
+    this->number_options = service.number_options;
 }
 
 Service::~Service()
 {
-
+    if (options != NULL)
+        delete[] options;
 }
 
-void Service::setRepository(const Repository& repository)
+Service& Service::operator=(const Service& service)
 {
-    this->repository = repository;
+    if (this == &service)
+        return *this;
+
+    this->repository = service.repository;
+    this->options = service.options;
+    this->number_options = service.number_options;
 }
 
-void Service::addMovieService(Movie& movie)
+void Service::addMovie(Movie& movie)
 {
-    return repository.addMovie(movie);  
+    repository.addMovie(movie);
+
+    options[number_options++] = repository;
 }
 
-bool Service::findMovieService(Movie& movie)
+int Service::findMovie(Movie& movie)
 {
     return repository.findMovie(movie);
 }
 
-void Service::deleteMovieService(Repository& repository, int& i)
+Movie Service::getItemFromPosition(int i)
 {
-    Movie crt_Movie = repository.getItemFromPosition(i);
-    repository.deleteMovie(crt_Movie);
+    return repository.getItemFromPosition(i);
 }
 
-void Service::updateMovieService(Repository& repository, int& i, char* title, char* date, char* genre)
+Movie* Service::updateMovie(Movie& movie, char* title, char* date, char* genre)
 {
-    Movie crt_Movie = repository.getItemFromPosition(i);
-    repository.updateMovie(crt_Movie, title, date, genre);
+    repository.updateMovie(movie, title, date, genre);
+
+    options[number_options++] = repository;
+
+    return &movie;
 }
 
-int Service::getSize()
+void Service::deleteMovie(Movie& movie)
 {
-    return repository.getSize();
+    repository.deleteMovie(movie);
+
+    options[number_options++] = repository;
 }
 
 Movie* Service::getAll()
@@ -56,26 +70,30 @@ Movie* Service::getAll()
     return repository.getAll();
 }
 
+int Service::getSize()
+{
+    return repository.getSize();
+}
 
-void Service::filter_movies_by_genre(Repository& repository, char* genre, Movie filter_movies[100], int& m)
+void Service::filter_movies_by_genre(char* gender, Movie filter_movies[100], int& m)
 {
     int i;
     for (i = 0; i < repository.getSize(); i++)
     {
         Movie crt_Movie = repository.getItemFromPosition(i);
-        if (strcmp(crt_Movie.getGenre(), genre) == 0)
+        if (strcmp(crt_Movie.getGenre(), gender) == 0)
         {
             filter_movies[m++] = crt_Movie;
         }
     }
     if (m == 0)
         cout << "Nu exista!" << endl;
-
+    
 }
 
-void Service::delete_movies_by_date(Repository& repository, char* date)
+void Service::delete_movies_by_date(char* date)
 {
-    int i = 0;
+    int i = 0; 
     while (i < repository.getSize())
     {
         Movie crt_Movie = repository.getItemFromPosition(i);
@@ -85,4 +103,18 @@ void Service::delete_movies_by_date(Repository& repository, char* date)
         }
         i++;
     }
+
+    options[number_options++] = repository;
+}
+
+int Service::undo()
+{
+    if (number_options > 1)
+    {
+        number_options--;
+        this->repository = this->options[number_options - 1];
+        return 0;
+    }
+    else
+        return -1;
 }

@@ -7,16 +7,21 @@
 #include "tests_repository.h"
 #include "tests_service.h"
 
-
 using namespace std;
 
 int main()
 {
-	run();
-	tests_with_domain();
-	tests_with_repository();
-	tests_with_service();
-	
+	TestDomain testDomain;
+	testDomain.run_TestDomain();
 
+	TestRepository testRepository;
+	testRepository.run_TestRepository();
+
+	TestService testService;
+	testService.run_TestService();
+	
+	UserInterface userInterface;
+	userInterface.run();
+	
 	return 0;
 }

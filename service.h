@@ -1,32 +1,39 @@
 #pragma once
 #ifndef SERVICE_H
 #define SERVICE_H
-#include "domain.h"
 #include "repository.h"
 
 class Service
 {
 private:
-	Repository repository;
+    Repository repository;
+    Repository *options;
+    int number_options;
 public:
-	Service();
-	Service(const Repository& repository);
-	~Service();
+    Service();
+    Service(const Service& service);
+    ~Service();
 
-	void setRepository(const Repository& repository);
-	void addMovieService(Movie& movie);
-	bool findMovieService(Movie& movie);
-	void deleteMovieService(Repository& repository, int& i);
-	void updateMovieService(Repository& repository, int& i, char* title, char* date, char* genre);
-	Movie* getAll();
-	int getSize();
 
-	void filter_movies_by_genre(Repository& repository, char* genre, Movie filter_movies[100], int& m);
-	void delete_movies_by_date(Repository& repository, char* date);
-	
+    Service& operator = (const Service& service);
+
+    void addMovie(Movie& movie);
+    int findMovie(Movie& movie);
+    Movie getItemFromPosition(int i);
+    Movie* updateMovie(Movie& movie, char* title, char* date, char* genre);
+    void deleteMovie(Movie& movie);
+    Movie* getAll();
+    int getSize();
+
+    void filter_movies_by_genre(char* gender, Movie filter_movies[100], int& m);
+    void delete_movies_by_date(char* date);
+
+    int undo();
 };
 
 #endif //SERVICE_H
+
+
 
 
 

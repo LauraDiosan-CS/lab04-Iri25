@@ -27,13 +27,13 @@
     <ClInclude Include="user_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tests_service.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tests_domain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tests_repository.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tests_service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,13 +53,13 @@
     <ClCompile Include="user_interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests_repository.cpp">
+    <ClCompile Include="tests_domain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests_service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests_domain.cpp">
+    <ClCompile Include="tests_repository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

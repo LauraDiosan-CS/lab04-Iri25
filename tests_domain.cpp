@@ -1,11 +1,18 @@
-#include <cassert>
-#include <string.h>
-#include "domain.h"
-#include "repository.h"
-#include "service.h"
 #include "tests_domain.h"
+#include "domain.h"
+#include <assert.h>
 
-void tests_with_domain()
+TestDomain::TestDomain()
+{
+
+}
+
+TestDomain::~TestDomain()
+{
+
+}
+
+void TestDomain::tests_constructors()
 {
 	Movie movies[5];
 
@@ -31,8 +38,8 @@ void tests_with_domain()
 	strcpy_s(title1, sizeof "Bright", "Bright");
 	strcpy_s(date1, sizeof "11.11.2019", "11.11.2019");
 	strcpy_s(genre1, sizeof "thriller", "thriller");
-	Movie movie1; 
-	
+	Movie movie1;
+
 	//general constructor
 	strcpy_s(title2, sizeof "Mute", "Mute");
 	strcpy_s(date2, sizeof "11.11.2011", "11.11.2011");
@@ -59,44 +66,110 @@ void tests_with_domain()
 	movies[2] = movie3;
 	movies[3] = movie4;
 	movies[4] = movie5;
+}
 
-	//getTitle
+void TestDomain::test_operator()
+{
+	Movie movies[5], movie1, movie4;
+
+	movies[0] = movie1;
+	movies[5] = movie4;
+
+	movie4 = movie1;
+	assert(movie4 == movie1);
+}
+
+void TestDomain::test_getTitle()
+{
+	Movie movies[5], movie1, movie2, movie3, movie4, movie5;
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
 	assert(movie1.getTitle() == "Bright");
 	assert(movie2.getTitle() == "Mute");
 	assert(movie3.getTitle() == "Mank");
 	assert(movie4.getTitle() == "Tig");
 	assert(movie5.getTitle() == "Rebecca");
+}
 
-	//getDate
+void TestDomain::test_getDate()
+{
+	Movie movies[5], movie1, movie2, movie3, movie4, movie5;
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
 	assert(movie1.getDate() == "11.11.2019");
 	assert(movie2.getDate() == "11.11.2011");
 	assert(movie3.getDate() == "09.11.2016");
 	assert(movie4.getDate() == "02.03.2020");
 	assert(movie5.getDate() == "01.02.2020");
+}
 
-	//getGenre
+void TestDomain::test_getGenre()
+{
+	Movie movies[5], movie1, movie2, movie3, movie4, movie5;
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
 	assert(movie1.getGenre() == "thriller");
 	assert(movie2.getGenre() == "drame");
 	assert(movie3.getGenre() == "biographical");
 	assert(movie4.getGenre() == "documentary");
 	assert(movie5.getGenre() == "thriller");
+}
+void TestDomain::test_setTitle()
+{
+	Movie movies[5], movie2, movie3;
 
-	//setTitle
-	movie2.setTitle(movie3.getTitle()); 
+	movies[1] = movie2;
+	movies[2] = movie3;
+
+	movie2.setTitle(movie3.getTitle());
 	assert(movie2.getTitle() == movie3.getTitle());
+}
 
-	//setDate
+void TestDomain::test_setDate()
+{
+	Movie movies[5], movie2, movie3;
+
+	movies[1] = movie2;
+	movies[2] = movie3;
+
 	movie2.setDate(movie3.getDate());
 	assert(movie2.getDate() == movie3.getDate());
+}
 
-	//setGender
+void TestDomain::test_setGenre()
+{
+	Movie movies[5], movie2, movie3;
+
+	movies[1] = movie2;
+	movies[2] = movie3;
+
 	movie2.setGenre(movie3.getGenre());
 	assert(movie2.getGenre() == movie3.getGenre());
-
-	//operator
-	movie4 = movie1;
-	assert(movie4 == movie1);
 }
- 
 
-
+void TestDomain::run_TestDomain()
+{
+	void tests_constructors();
+	void test_operator();
+	void test_getTitle();
+	void test_getDate();
+	void test_getGenre();
+	void test_setTitle();
+	void test_setDate();
+	void test_setGenre();
+}

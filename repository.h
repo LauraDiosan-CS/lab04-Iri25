@@ -8,21 +8,21 @@ class Repository
 private:
     Movie movies[100]; 
     int n;
-    const char* fis;
 public:
     Repository();
-   // Repository(const char* file);
+    Repository(const Repository& repository);
     ~Repository();
+    
+    Repository& operator = (const Repository& repository);
 
-    //void loadFromFile(const char* file);
     void addMovie(Movie& movie); 
     int findMovie(Movie& movie);
     Movie getItemFromPosition(int i);
+    void updateMovie(Movie& movie, char*, char*, char*);
     void deleteMovie(Movie& movie);
-    void updateMovie(Movie& movie, char* title, char* date, char* genre);
     Movie* getAll();
     int getSize();
 
 };
 
-# endif //REPOSITORY_H
+#endif //REPOSITORY_H

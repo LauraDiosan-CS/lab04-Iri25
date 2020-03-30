@@ -1,11 +1,18 @@
-#include <cassert>
-#include <string.h>
-#include "domain.h"
-#include "repository.h"
-#include "service.h"
 #include "tests_repository.h"
+#include "repository.h"
+#include <assert.h>
 
-void tests_with_repository()
+TestRepository::TestRepository()
+{
+
+}
+
+TestRepository::~TestRepository()
+{
+	assert(repository.getSize() == 0);
+}
+
+void TestRepository::tests_constructors()
 {
 	Repository repository;
 	Movie movies[5];
@@ -60,9 +67,19 @@ void tests_with_repository()
 	movies[2] = movie3;
 	movies[3] = movie4;
 	movies[4] = movie5;
+}
 
+void TestRepository::test_addMovie()
+{
+	Repository repository;
+	Movie movies[5], movie1, movie2, movie3, movie4, movie5;
 
-	//addMovie
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[3] = movie4;
+	movies[4] = movie5;
+
 	repository.addMovie(movie1);
 	repository.addMovie(movie2);
 	repository.addMovie(movie3);
@@ -74,20 +91,56 @@ void tests_with_repository()
 	assert(movies[2] == movie3);
 	assert(movies[3] == movie4);
 	assert(movies[4] == movie5);
+}
 
-	//deleteMovie
-	repository.deleteMovie(movie4);
+void TestRepository::test_updateMovie()
+{
+	Repository repository;
+	Movie movies[5], movie1, movie2, movie3, movie5;
 
-	//updateMovie
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[4] = movie5;
+
 	repository.updateMovie(movie2, movie3.getTitle(), movie1.getDate(), movie5.getGenre());
+
 	assert(movie2.getTitle() == "Mank");
 	assert(movie2.getDate() == "11.11.2019");
 	assert(movie2.getGenre() == "thriller");
+}
 
+void TestRepository::test_deleteMovie()
+{
+	Repository repository;
+	Movie movies[5], movie4;
+	movies[3] = movie4;
 
-	//getAll
+	repository.deleteMovie(movie4);
+}
+
+void TestRepository::test_getAll()
+{
+	Repository repository;
+	Movie movies[5], movie1, movie2, movie3, movie5;
+
+	movies[0] = movie1;
+	movies[1] = movie2;
+	movies[2] = movie3;
+	movies[4] = movie5;
+
 	assert(repository.getAll()[0] == movie1);
 	assert(repository.getAll()[1] == movie2);
 	assert(repository.getAll()[2] == movie3);
 	assert(repository.getAll()[3] == movie5);
+}
+
+void TestRepository::run_TestRepository()
+{
+	void tests_constructor();
+	void test_addMovie();
+	void test_updateMovie();
+	void test_deleteMovie();
+	void test_getAll();
+	
 }

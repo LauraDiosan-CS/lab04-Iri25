@@ -17,20 +17,22 @@ public:
     Movie(const Movie& movie);
     ~Movie();
 
+    Movie& operator = (const Movie& movie);
+    bool operator == (const Movie& movie);
+
     char* getTitle();
     char* getDate();
     char* getGenre();
+
     void setTitle(char* title);
     void setDate(char* date);
-    void setGenre(char* genre);
+    void setGenre(char* gender);
 
-    Movie& operator = (const Movie& movie);
-    bool operator == (const Movie& movie);
     friend istream& operator>>(istream& is, const Movie& movie);
     friend ostream& operator<<(ostream& os, const Movie& movie);
 
 };
 
-#endif //DOMAIN_H = MOVIE_H
+#endif // DOMAIN_H = MOVIE_H
 
 

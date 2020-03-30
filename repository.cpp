@@ -1,7 +1,5 @@
 #include "repository.h"
-#include <iostream>
-#include <fstream>
-#include <string>
+#include<iostream>
 using namespace std;
 
 Repository::Repository()
@@ -9,88 +7,30 @@ Repository::Repository()
 	this->n = 0;
 }
 
-/*
-Repository::Repository(const char* file)
+Repository::Repository(const Repository& repository)
 {
-	fis = file;
-	ifstream f(file);
-	string line;
-	char* title = new char[20];
-	char* date = new char[12];
-	char* gender = new char[20];
-	while (!f.eof())
+	this->n = repository.n;
+	for (int i = 0; i < this->n; i++)
 	{
-		f >> title >> date >> gender;
-
-		if (title!= " ")
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
-		
-		if (date != " ")
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
-
-		if (gender != " ")
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
+		this->movies[i] = repository.movies[i];
 	}
-
-	delete[] title;
-	delete[] date;
-	delete[] gender;
-
-	f.close();
 }
-*/
 
 Repository::~Repository()
 {
 	this->n = 0;
 }
 
-/*
-void Repository::loadFromFile(const char* file)
+
+Repository& Repository:: operator=(const Repository& repository)
 {
-	movies.clear();
-	ifstream f(file);
-	char* title = new char[20];
-	char* date = new char[12];
-	char* gender = new char[20];
-	while (!f.eof())
+	this->n = repository.n;
+	for (int i = 0; i < this->n; i++)
 	{
-		f >> title >> date >> gender;
-		if (strcmp(title, " ") != 0)
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
-
-		if (strcmp(date, " ") != 0)
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
-
-		if (strcmp(gender, " ") != 0)
-		{
-			Movie movie(title, date, gender);
-			movies.push_back(movie);
-		}
+		this->movies[i] = repository.movies[i];
 	}
-
-	delete[] title;
-	delete[] date;
-	delete[] gender;
-
-	f.close();
+	return *this;
 }
-*/
 
 void Repository::addMovie(Movie& movie)
 {
@@ -100,10 +40,11 @@ void Repository::addMovie(Movie& movie)
 int Repository::findMovie(Movie& movie)
 {
 	int i = 0;
-	while (i < this->n)
+	while (i < getSize())
 	{
 		if (movies[i] == movie)
 			return i;
+		i++;
 	}
 	return -1;
 }
@@ -113,18 +54,10 @@ Movie Repository::getItemFromPosition(int i)
 	return movies[i];
 }
 
-void Repository::deleteMovie(Movie& movie)
-{
-	int i = findMovie(movie);
-	if (i != -1)
-		movies[i] = movies[n - 1];
-	n--;
-}
-
 void Repository::updateMovie(Movie& movie, char* title, char* date, char* genre)
 {
 	int i;
-	for (i = 0; i < getSize(); i++)
+	for(i = 0; i < getSize(); i++)
 	{
 		if (movies[i] == movie)
 		{
@@ -133,6 +66,14 @@ void Repository::updateMovie(Movie& movie, char* title, char* date, char* genre)
 			movies[i].setGenre(genre);
 		}
 	}
+}
+
+void Repository::deleteMovie(Movie& movie)
+{
+	int i = findMovie(movie);
+	if (i != -1)
+		movies[i] = movies[n - 1];
+	n--;
 }
 
 Movie* Repository::getAll()

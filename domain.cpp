@@ -5,7 +5,6 @@
 #include <ostream>
 #include <iostream>
 
-
 using namespace std;
 
 Movie::Movie()
@@ -55,8 +54,35 @@ Movie::~Movie()
 	if (this->genre)
 		delete[] this->genre;
 	this->genre = NULL;
+}
+
+Movie& Movie::operator=(const Movie& movie)
+{
+	if (this == &movie)
+		return *this;
+
+	if (title)
+		delete[] title;
+	title = new char[strlen(movie.title) + 1];
+	strcpy_s(title, strlen(movie.title) + 1, movie.title);
+
+	if (date)
+		delete[] date;
+	date = new char[strlen(movie.date) + 1];
+	strcpy_s(date, strlen(movie.date) + 1, movie.date);
+
+	if (genre)
+		delete[] genre;
+	genre = new char[strlen(movie.genre) + 1];
+	strcpy_s(genre, strlen(movie.genre) + 1, movie.genre);
 
 }
+
+bool Movie::operator==(const Movie& movie)
+{
+	return (strcmp(title, movie.title) == 0) && (strcmp(date, movie.date) == 0) && (strcmp(genre, movie.genre) == 0);
+}
+
 
 char* Movie::getTitle()
 {
@@ -98,46 +124,12 @@ void Movie::setDate(char* date)
 
 void Movie::setGenre(char* genre)
 {
-	if (this->genre)
+	if (this->genre) 
 	{
 		delete[] this->genre;
 	}
 	this->genre = new char[strlen(genre) + 1];
 	strcpy_s(this->genre, strlen(genre) + 1, genre);
-}
-
-
-Movie& Movie::operator=(const Movie& movie)
-{
-	if (this == &movie)
-		return *this;
-
-	if (title)
-		delete[] title;
-	title = new char[strlen(movie.title) + 1];
-	strcpy_s(title, strlen(movie.title) + 1, movie.title);
-
-	if (date)
-		delete[] date;
-	date = new char[strlen(movie.date) + 1];
-	strcpy_s(date, strlen(movie.date) + 1, movie.date);
-
-	if (genre)
-		delete[] genre;
-	genre = new char[strlen(movie.genre) + 1];
-	strcpy_s(genre, strlen(movie.genre) + 1, movie.genre);
-
-	/*
-	this->setTitle(movie.title);
-	this->setDate(movie.date);
-	this->setGender(movie.genre);
-	*/
-	return *this;
-}
-
-bool Movie:: operator==(const Movie& movie)
-{
-	return (strcmp(this->title, movie.title) == 0) && (strcmp(this->date, movie.date) == 0) && (strcmp(this->genre, movie.genre) == 0);
 }
 
 istream& operator>>(istream& is, const Movie& movie)
@@ -152,6 +144,6 @@ istream& operator>>(istream& is, const Movie& movie)
 }
 ostream& operator<<(ostream& os, const Movie& movie)
 {
-	os << "Film: "<< movie.title << ", " << movie.date << ", " << movie.genre << endl;
+	os <<"Film: "<< movie.title << ", "<< movie.date << ", " << movie.genre << endl;
 	return os;
 }

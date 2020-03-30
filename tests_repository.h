@@ -1,7 +1,24 @@
 #pragma once
-#ifndef TESTS_REPOSITORY_H
-#define TESTS_REPOSITORY_H
+#ifndef TESTS_REPOSITORY
+#define TESTS_REPOSITORY
+#include "repository.h"
 
-void tests_with_repository();
+class TestRepository
+{
+private:
+	Repository repository;
 
-#endif //TESTS_REPOSITORY_H
+	void tests_constructors();
+	void test_addMovie();
+	void test_updateMovie();
+	void test_deleteMovie();
+	void test_getAll();
+public:
+	TestRepository();
+	~TestRepository();
+
+	void run_TestRepository();
+};
+
+#endif //TESTS_REPOSITORY
+
